@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const ProjectRoute = require("./routes/project.route");
-
 const app = express();
 app.use(express.json());
 
@@ -20,7 +19,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.use("api/project",ProjectRoute);
+app.use("/api/project",ProjectRoute);
 
 const connect = () => {
   return mongoose.connect(process.env.mongoDB_URL);

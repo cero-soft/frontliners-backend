@@ -1,6 +1,7 @@
 const fs = require("fs-extra");
 
 const createProject = (source, destination) => {
+  console.log(source);
   const projectPromise = new Promise((resolve, reject) => {
     fs.copy(source, destination, function (err) {
       if (err) {
