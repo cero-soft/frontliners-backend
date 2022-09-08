@@ -1,22 +1,35 @@
 const express = require("express");
-const { createProject } = require("./utils/copy-folder");
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+const ProjectRoute = require("./routes/project.route");
 
 const app = express();
 app.use(express.json());
 
 app.get("/", async (req, res) => {
   try {
-    await createProject("demo","projects");
     res.status(200).json({
-        msg:"Project Created",
-    })
+      msg: "Server Working",
+    });
   } catch (error) {
     res.status(200).json({
-        msg:"Project Not Created",
-        error,
-    })
+      msg: "Server Not Working",
+      error,
+    });
   }
 });
-app.listen(3001, () => {
-  console.log("Server Started");
-});
+
+app.use("api/project",ProjectRoute);
+
+const connect = () => {
+  return mongoose.connect(process.env.mongoDB_URL);
+};
+const start = async () => {
+  await connect();
+  app.listen(3001, () => {
+    console.log("Server Started");
+  });
+};
+
+start();
